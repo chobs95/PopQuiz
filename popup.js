@@ -1,16 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-    chrome.storage.local.get(['highlightedText'], function(result) {
-        document.getElementById('highlightedText').textContent = result.highlightedText || 'No text saved.';
-    });
-    document.getElementById('generateQuestion').addEventListener('click', function() {
-        chrome.storage.local.get(['highlightedText'], function(result) {
-        if (result.highlightedText) {
-            generateQuestion(result.highlightedText);
-            }
-        });
-    });
+console.log("attempting get...", chrome.storage.local.get('highlights'))
+
+document.addEventListener('DOMContentLoaded', async function() {
+    try{
+        const result = await chrome.storage.local.get(['highlights'])
+        console.log("here's the result of the get...:", result)
+        const highlights = result.highlights
+        console.log(highlights)
+        const container = document.getElementById('highlights')
+
+        if (highlights.length > 0) {
+            highlights.forEach((text, index) => {
+                const entry = document.createElement('div')
+                if (text.length > 20) {
+                    const truncatedText = text.length > 20 ? text.slice(0, 20) + '...' : text;
+                    entry.textContent = `${index + 1}: ${truncatedText}`
+                    container.appendChild(entry)
+                } else {
+                    entry.textContent = `${index + 1}: ${text}`
+                    entry.style.marginBottom = '5px'
+                    container.appendChild(entry)
+                }
+
+            })
+        } else {
+            container.textContent = 'No prompts banked'
+        }
+        
+        // document.getElementById('generateQuetion').addEventListener('click', async function () {
+        //     const result = await chrome.storage.local.get(['highlightedText']);
+        //     if (result.highlightedText) {
+        //         generateQuestion(result.highlightedText);
+        //     }
+        // })
+    } catch (error) {
+        console.error('Error fetching Highlighted text: ', error)
+    }
+})
     
-});
 
 
 // function generateQuestion(text) {

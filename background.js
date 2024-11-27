@@ -115,7 +115,7 @@ function showFloatingUI(selectedText) {
             closeButton.addEventListener('click', () => floatingDiv.remove());
 
             const undoButtonElement = floatingDiv.querySelector('#undoButton')
-            undoButtonElement.addEventListener('click', ()=> undoLastHighlight(floatingDiv))
+            undoButtonElement.addEventListener('click', () => undoLastHighlight(floatingDiv))
 
             // Automatically remove the floating UI after 5 seconds
             setTimeout(() => {
