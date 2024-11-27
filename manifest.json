@@ -1,0 +1,41 @@
+{
+    "manifest_version": 3,
+    "name": "PopQuiz",
+    "description": "Highlight something that you find interesting or useful and get quizzed on it in the future to test your memory!",
+    "version": "1.0",
+    "icons": {
+        "16": "/images/popQuiz_16.png",
+        "48": "/images/popQuiz_48.png",
+        "128": "/images/popQuiz_128.png"
+    },
+    "action": {
+        "default_title": "Pop Quiz",
+        "default_icon": "/images/popQuiz_48.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"  
+    },
+    "content_scripts": [
+        {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+        }  
+    ],
+    "web_accessible_resources": [
+    {
+        "resources": ["floatingUI.html"],
+        "matches": ["<all_urls>"]
+    }
+    ],
+    "permissions": [
+        "storage", 
+        "activeTab",  
+        "scripting" ,
+        "contextMenus",
+        "notifications",
+        "aiLanguageModelOriginTrial",
+        "nativeMessaging"
+    ],
+    "host_permissions": ["https://api.openai.com/"]
+}
