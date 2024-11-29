@@ -25,8 +25,8 @@
             align-items: center;
             background-color:  rgba(93, 93, 93, 0.91);;
             width: 300px;
-            height: 300px;
-
+            max-height: 300px;
+            min-height: 100px;
         }
         #highlightContainer{
             display: flex;
@@ -42,7 +42,7 @@
             font-family: Arial, sans-serif; 
             padding: 5px;
         }
-        #generateQuestion {
+        .questionButton {
             display: block;
             justify-content: center;
             margin-top: 10px;
@@ -53,10 +53,10 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        #generateQuestion:hover {
+        .questionButton:hover {
             background-color: rgb(252, 88, 88);
         }
-        .generatePromptContainer {
+        .generateQuestionContainer {
             display: flex;
             width: 300px;
             height: 50px;
@@ -82,15 +82,14 @@
 <body id="floatingDiv">
     <div>
         <h3>Your Saved Highlights</h3>
-        <div class="scrollBoxContainer">
+        <div id="scrollBoxContainer" class="scrollBoxContainer">
             <div id="placeholderText"> No prompts added</div>
             <div id="highlightContainer">
             </div>
         </div>
-        <div class="generatePromptContainer">
-            <button id="generateQuestion">Generate Question</button>
+        <div id="questionContainer" class="generateQuestionContainer">
             <div id="question"></div>
-            <script src="popup.js"></script>
         </div>
+    <script src="popup.js"></script>
 </body>
 </html>
