@@ -1,5 +1,6 @@
 console.log("attempting get...", chrome.storage.local.get('highlights'))
 
+
 document.addEventListener('DOMContentLoaded', async function() {
     try{
         const result = await chrome.storage.local.get(['highlights'])
@@ -59,11 +60,30 @@ document.addEventListener('DOMContentLoaded', async function() {
             entry.remove()
     })}
     
-    function handleGenerateQuestion(highlights) {
-        promptContainer = document.getElementById('scrollBoxContainer')
+    async function handleGenerateQuestion(highlights) {
+        const promptContainer = document.getElementById('scrollBoxContainer')
         promptContainer.remove()
+        const questionButton = document.getElementById('questionContainer')
+        document.getElementById('titleMessage').textContent = "Do you remember the answer?"
+        questionButton.remove()
+        console.log("here are the highlights : ",highlights)
+
+        // Generate a random question to pass to API
+        const randomQuestion = highlights[Math.floor(Math.random() * highlights.length)]
+        
+        console.log(randomQuestion)
+        
+        // Function to await gemini's api 
+        const question = await generateQuestionFromGemini(randomQuestion)
+
+        const innerContainer = document.getElementById("innerContainer")
+        // const question = document.createElement('div')
+        question.textContent = `This is the info: ${randomQuestion} `
+        innerContainer.appendChild(question)
     }
 
-
+    async function generateQuestionFromGemini(randomQuestion) {
+        
+    }
 
 
