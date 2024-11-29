@@ -2,11 +2,15 @@
 <html>
 <head>
     <style>
+        body { 
+            font-family: Arial, sans-serif; padding: 10px; 
+            margin: 0;
+        }
         #floatingDiv {
             position: fixed;
             top: 10px;
             right: 10px;
-            width: 20vw;
+            width: 30vw;
             height: auto;
             background-color: rgba(57, 57, 57, 0.91);
             color: white;
@@ -15,34 +19,53 @@
             z-index: 9999;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
+        .flex-container{
+            display: flex;
+            justify-content: space-around;
+        }
         #closeButton {
-            display: block;
             margin-top: 10px;
+            margin-right: 5px;
             background-color: #f00;
             color: white;
             border: none;
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 15px;
             cursor: pointer;
+            height: 40px;
+            width: 100px;
         }
         #undoButton {
-            display: block;
             margin-top: 10px;
             background-color: #f00;
             color: white;
             border: none;
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 15px;
             cursor: pointer;
+            height: 40px;
+            width: 100px;
         }
+        #closeButton:hover {
+            background-color: rgb(252, 88, 88);
+        }
+        #undoButton:hover {
+            background-color: rgb(252, 88, 88);
+        }
+
+
     </style>
 </head>
 <body>
     <div id="floatingDiv">
         <h3>Saved Highlight</h3>
-        <p id="floatingMessage">Your highlighted text has been saved!</p>
-        <button id="closeButton">Close</button>
-        <button id="undoButton">Undo</button>
+        <div><p id="floatingMessage">Your highlighted text has been saved!</p>
+        </div>
+        
+        <div class="flex-container">
+            <button id="closeButton" >Close</button>
+            <button id="undoButton">Undo</button>
+        </div>
     </div>
 </body>
 </html>

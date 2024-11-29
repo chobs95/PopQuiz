@@ -24,7 +24,7 @@
     ],
     "web_accessible_resources": [
     {
-        "resources": ["floatingUI.html"],
+        "resources": ["floatingUI.html", "popup.html","styles/*"],
         "matches": ["<all_urls>"]
     }
     ],

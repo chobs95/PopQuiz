@@ -6,25 +6,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.log("here's the result of the get...:", result)
         const highlights = result.highlights
         console.log(highlights)
-        const container = document.getElementById('highlights')
-
-        if (highlights.length > 0) {
+        const placeholderText = document.getElementById('placeholderText')
+        if (highlights.length > 0) { 
+            placeholderText.remove()
+            const container = document.getElementById('highlightContainer')
             highlights.forEach((text, index) => {
                 const entry = document.createElement('div')
-                if (text.length > 20) {
-                    const truncatedText = text.length > 20 ? text.slice(0, 20) + '...' : text;
-                    entry.textContent = `${index + 1}: ${truncatedText}`
-                    container.appendChild(entry)
-                } else {
-                    entry.textContent = `${index + 1}: ${text}`
-                    entry.style.marginBottom = '5px'
-                    container.appendChild(entry)
-                }
+                const truncatedText = text.length > 30 ? text.slice(0 , 30) + '...' : text;
+                entry.className = 'entry'
+                entry.textContent = `${index + 1}: `+`${truncatedText}`
 
-            })
-        } else {
-            container.textContent = 'No prompts banked'
-        }
+                removeButton = document.createElement('button')
+                removeButton.textContent = 'X'
+                removeButton.className = 'removeButton'
+                entry.appendChild(removeButton)
+                container.appendChild(entry)
+            container.className = "scrollBox"
+            })} else {
+                console.log("cool")
+            }
         
         // document.getElementById('generateQuetion').addEventListener('click', async function () {
         //     const result = await chrome.storage.local.get(['highlightedText']);

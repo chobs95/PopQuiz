@@ -23,14 +23,6 @@ function getTabId() {
 
 
 
-
-
-
-
-
-
-
-
 //**  THIS STUFF IS FOR THE RIGHT CLICK MENU STUFFF*/
 
 // Create a context menu when the user right-clicks

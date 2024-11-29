@@ -1,17 +1,95 @@
 <!DOCTYPE html>
 <html>
+    <style>
+    </style>
 <head>
     <title>Saved Highlights</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 10px; }
+        body { 
+            font-family: Arial, sans-serif; 
+        }
+        #floatingDiv {
+            display:flex;
+            background-color: rgba(57, 57, 57, 0.91);
+            width: 300px;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 9999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .scrollBoxContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color:  rgba(93, 93, 93, 0.91);;
+            width: 300px;
+            height: 300px;
+
+        }
+        #highlightContainer{
+            display: flex;
+            flex-direction: column;
+            background-color:  rgba(93, 93, 93, 0.91);;
+            width: 295px;
+            overflow: auto;
+        }
+        .placeholderText {
+            display: flex;
+            text-align: center;
+            text-justify: center;
+            font-family: Arial, sans-serif; 
+            padding: 5px;
+        }
+        #generateQuestion {
+            display: block;
+            justify-content: center;
+            margin-top: 10px;
+            background-color: #f00;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #generateQuestion:hover {
+            background-color: rgb(252, 88, 88);
+        }
+        .generatePromptContainer {
+            display: flex;
+            width: 300px;
+            height: 50px;
+            justify-content: center;
+        }
+        .entry {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .removeButton {
+            margin-right:10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
     </style>
     <script src="latestHighlight.js"></script>
 </head>
-<body>
-    <h3>Your Saved Highlight</h3>
-    <div id="highlights"></div>
-    <button id="generateQuestion">Generate Question</button>
-    <div id="question"></div>
-    <script src="popup.js"></script>
+<body id="floatingDiv">
+    <div>
+        <h3>Your Saved Highlights</h3>
+        <div class="scrollBoxContainer">
+            <div id="placeholderText"> No prompts added</div>
+
+            <div id="highlightContainer">
+
+                
+            </div>
+
+        </div>
+        <div class="generatePromptContainer">
+            <button id="generateQuestion">Generate Question</button>
+            <div id="question"></div>
+            <script src="popup.js"></script>
+        </div>
 </body>
 </html>
