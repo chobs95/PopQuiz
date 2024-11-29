@@ -69,7 +69,12 @@
         }
         .removeButton {
             margin-right:10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border:none;
+            background-color: transparent;
+        }
+        .removeButton:hover{
+            color:grey;
+            
         }
     </style>
     <script src="latestHighlight.js"></script>
@@ -79,12 +84,8 @@
         <h3>Your Saved Highlights</h3>
         <div class="scrollBoxContainer">
             <div id="placeholderText"> No prompts added</div>
-
             <div id="highlightContainer">
-
-                
             </div>
-
         </div>
         <div class="generatePromptContainer">
             <button id="generateQuestion">Generate Question</button>

@@ -20,23 +20,34 @@ document.addEventListener('DOMContentLoaded', async function() {
                 removeButton.textContent = 'X'
                 removeButton.className = 'removeButton'
                 entry.appendChild(removeButton)
+
+                removeButton.addEventListener('click', ()=> { 
+                    console.log('clicked listener')
+                    chrome.storage.local.get(['highlights'], (result) => {
+                        const updatedHighlights = result.highlights || []
+                        updatedHighlights.splice(index, 1)
+                        chrome.storage.local.set({ highlights: updatedHighlights})
+                        entry.remove()
+                    })
+                })
                 container.appendChild(entry)
+            })
             container.className = "scrollBox"
-            })} else {
+            } else {
                 console.log("cool")
             }
         
-        // document.getElementById('generateQuetion').addEventListener('click', async function () {
-        //     const result = await chrome.storage.local.get(['highlightedText']);
-        //     if (result.highlightedText) {
-        //         generateQuestion(result.highlightedText);
-        //     }
-        // })
-    } catch (error) {
-        console.error('Error fetching Highlighted text: ', error)
-    }
-})
+        } catch (error) {
+            console.error('Error fetching Highlighted text: ', error)
+        }
+    })
     
+    // document.getElementById('generateQuetion').addEventListener('click', async function () {
+    //     const result = await chrome.storage.local.get(['highlightedText']);
+    //     if (result.highlightedText) {
+    //         generateQuestion(result.highlightedText);
+    //     }
+    // })
 
 
 // function generateQuestion(text) {
