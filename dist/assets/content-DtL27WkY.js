@@ -1,0 +1,1 @@
+chrome.storage.local.get("highlights",e=>{e.highlights&&console.log("Saved highlights:",e.highlights)});console.log("Pop up content page is running");chrome.runtime.onMessage.addListener((e,o,g)=>(console.log("received"),e.txt&&console.log("Received message:",e.txt),!0));
