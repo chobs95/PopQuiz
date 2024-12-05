@@ -78,60 +78,60 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.log(randomQuestion)
         
         const generatedQuestion  = await fetchQuestion(randomQuestion)
-        parsedParagraphData = parseQuizParagraph(generatedQuestion.result)
-        formatQuestion(parsedParagraphData)
+        console.log("this is gen question: ", generatedQuestion.question)
+        // parsedParagraphData = parseQuizJSON(generatedQuestion)
+        formatQuestion(generatedQuestion)
     }
 
     async function fetchQuestion(prompt) {
-        if (!prompt) return
-        try{
-            const encodedPrompt = encodeURIComponent(prompt)
-            const queryParams = `?prompt=${encodedPrompt}`
-            const res = await fetch(``, {
-                method: "GET",
-            })
-            if (res.ok) {
-                const data = await res.json()
-                console.log("generated content:", data)
-                return data
-            } else {
-                console.log("Oh no somethign when wrong in lambda function uh oh stinky")
-                console.log(await res.json())
+        if (!prompt) return null
+            try{
+                const encodedPrompt = encodeURIComponent(prompt)
+                const queryParams = `?prompt=${encodedPrompt}`
+                const res = await fetch(``, {
+                    method: "GET",
+                })
+                if (res.ok) {
+                    const data = await res.json()
+                    console.log("generated content:", data)
+                    return data
+    
+                } else {
+                    console.log("Oh no somethign when wrong in lambda function uh oh stinky")
+                    console.log(await res)
+                }
+            } catch (error) {
+                console.log("this is the error: ", error)
             }
-        } catch (error) {
-            console.log("this is the error: ", error)
         }
-    }
-
-    function parseQuizParagraph(paragraph) {
-        // Split the paragraph into parts
-        const questionMatch = paragraph.match(/\*\*Question:\*\*\s*(.*?)(?=\s*[a-gA-G]\))/s);
-        console.log(questionMatch)
-        const question = questionMatch ? questionMatch[1].trim() : "Question not found";
         
-        const answersMatch = paragraph.match(/(?:[a-gA-G]\))\s*(.*?)(?=\s*[a-gA-G]\)|$)/g);
-        const answers = answersMatch
-        ? answersMatch.map((ans) => ans.replace(/[a-gA-G]\)\s*/, "").trim())
-        : [];
 
-        const correctAnswerMatch = paragraph.match(/\*\*Answer:\*\*\s*(.*)/);
-        let correctAnswer = correctAnswerMatch ? correctAnswerMatch[1].trim() : "Answer not found";
-        correctAnswer = correctAnswer.replace(/[a-gA-G]\)\s*/, "")
-        
-        console.log("parsing question result, ", question)
-        console.log("parsing answers result", answers)
-        console.log("parsing correct answers result", correctAnswer)
-    
-        // Extract the correct answer
-    
-        return { question, answers, correctAnswer };
-    }
+    // function parseQuizJSON(response) {
+    //     try {
+    //         // Ensure the response is properly parsed JSON
+    //         const { question, options, answer } = response;
+    //         console.log("Parsed Quiz json info:", question, options, answer)
+    //         // Extract answers as an array from the options object
+    //         return {
+    //             question: question || "Question not found",
+    //             answers: answers.length > 0 ? answers : "Answers not found",
+    //             correctAnswer: answer || "Correct answer not found",
+    //         };
+    //     } catch (error) {
+    //         console.error("Error parsing quiz JSON:", error);
+    //         return {
+    //             question: "Error parsing question",
+    //             answers: [],
+    //             correctAnswer: "Error parsing correct answer",
+    //         };
+    //     }
+    // }
 
     function formatQuestion(parsedData) {
         console.log("this is the parsed data for the formating function: ",parsedData)
         const questionText = parsedData.question
-        const answers = parsedData.answers
-        const correctAnswer =parsedData.correctAnswer
+        const options = parsedData.options
+        const answer =parsedData.answer
 
         const container = document.createElement("div");
         container.className = "question-container";
@@ -142,40 +142,36 @@ document.addEventListener('DOMContentLoaded', async function() {
         container.appendChild(questionDiv);
 
         // Create a container for the answers
-        const answersContainer = document.createElement("div");
-        answersContainer.className = "answers-container";
+        const optionsContainer = document.createElement("div");
+        optionsContainer.className = "answers-container";
 
-        // Map letters (a, b, c, ...) to answers
-        const alphabet = "abcdefghijklmnopqrstuvwxyz";
-        console.log("this should be an array of answers: ", answers)
-        answers.forEach((answer, index) => {
-                const letter = alphabet[index];
-
-                // Create a div for each answer
-                const answerDiv = document.createElement("div");
-                answerDiv.className = "answer-option";
-
-                // Create a button for the answer
-                const button = document.createElement("button");
-                button.className = "answer-button";
-                button.textContent = `${letter}) ${answer}`;
-
-                // Add click event to the button
-                button.addEventListener("click", () => {
-                    if (answer === correctAnswer) {
-                        alert("Correct!");
-                    } else {
-                        alert(`Try again! ${correctAnswer}`);
-                    }
-                });
-
-                // Append the button to the answer div
-                answerDiv.appendChild(button);
-                answersContainer.appendChild(answerDiv);
+        console.log("this should be an array of answers: ", options)
+        Object.entries(options).forEach(([letter, option]) => {
+            // Create a div for each answer
+            const optionDiv = document.createElement("div");
+            optionDiv.className = "answer-option";
+        
+            // Create a button for the answer
+            const button = document.createElement("button");
+            button.className = "answerButton";
+            button.textContent = `${letter}) ${option}`;
+        
+            // Add click event to the button
+            button.addEventListener("click", () => {
+                if (letter === answer) {
+                    alert("Correct!");
+                } else {
+                    alert(`Try again! The correct answer is: ${answer}`);
+                }
             });
+        
+            // Append the button to the answer div
+            optionDiv.appendChild(button);
+            optionsContainer.appendChild(optionDiv);
+        });
 
             // Append the answers container to the main container
-            container.appendChild(answersContainer);
+            container.appendChild(optionsContainer);
             document.getElementById("innerContainer").appendChild(container)
 
             // Return the complete formatted element
